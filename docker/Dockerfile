@@ -1,4 +1,7 @@
-FROM harbor.shared.cnxt3demo.svc.connext.com/default/wso2-mi-alpine:1.1.0
+ARG CNXT_DOCKER_ENDPOINT
+
+FROM $CNXT_DOCKER_ENDPOINT/default/wso2-mi-alpine:1.1.0
+#FROM harbor.shared.cnxt3demo.svc.connext.com/default/wso2-mi-alpine:1.1.0
 
 #RUN rm -rf /home/wso2carbon/wso2mi-4.2.0/repository/deployment/server/carbonapps/helloworld_1.0.0.car
 

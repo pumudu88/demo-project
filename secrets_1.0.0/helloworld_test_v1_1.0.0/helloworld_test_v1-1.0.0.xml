@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/secrets" name="helloworld_test_v1" xmlns="http://ws.apache.org/ns/synapse">    
+    <resource methods="GET" uri-mapping="/get">
+        <inSequence>
+            <log level="full"/>
+            <!-- <script language="js">
+                    <![CDATA[
+                        // Get the environment variable key from the message context
+                        var envKey = mc.getProperty('key');
+                        
+                        // Get the environment variable value using the key
+                        //var envValue = java.lang.System.getenv(envKey);
+                        
+                        // Set the environment variable value as a property
+                        mc.setProperty('value', 'envValue');
+                    ]]>
+            </script> -->           
+            <log>
+                <property name="secret test value : " expression="get-property('env','test')" />
+            </log>       
+             <payloadFactory media-type="json">
+                <format>{"test-secret" : "$1"}</format>
+                <args>
+                   <arg evaluator="xml" expression="get-property('env','test')"/>                   
+                </args>
+             </payloadFactory>
+             <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>    
+    <resource methods="GET" url-mapping="/">
+        <inSequence>
+            <payloadFactory media-type="json">
+                <format>
+                {
+                    "name" : "hello world test service v1",
+                    "details" : "This service allows to test rest and jms flow (provided that activemq product is deployed in the given environment)",
+                    "tests" : {
+                        "jms_flow" : {
+                            "curl" : "curl -X POST -H "Content-Type: application/json" -d '{"name": "test", "email": "test@example.com"}' https://hostname:port/test-service/payload -k",
+                            "response" : "202",
+                            "details" : "This resource verifies the jms flow. If response status is 202 jms message is sent to the respective message broker. To verify the end to end flow, please check the kibana service logs and correlation dashboard."
+                        },
+                        "rest_flow": {
+                            "curl" : "curl https://hostname:port/test-service/",
+                            "response" : "200",
+                            "details" : "this provides details about how to use the test service api."
+                        }
+                    }
+                }
+                </format>
+                <args/>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

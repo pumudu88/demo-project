@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -16,7 +16,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: docker registry login
         run: echo "${{ secrets.CNXT_DOCKER_PASSWORD }}" | docker login "${{ secrets.CNXT_DOCKER_ENDPOINT }}" -u "${{ secrets.CNXT_DOCKER_USERNAME }}" --password-stdin
       

@@ -30,13 +30,15 @@ jobs:
       - name: docker registry login
         run: echo '${{ secrets.CNXT_DOCKER_PASSWORD }}' | docker login 'https://${{ secrets.CNXT_DOCKER_ENDPOINT }}' -u '${{ secrets.CNXT_DOCKER_USERNAME }}' --password-stdin
       - name: docker pull connext MI base image
-        run: docker pull harbor.shared.cnxt3demo.svc.connext.com/default/wso2-mi-alpine:1.1.0
+        run: docker pull '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/wso2-mi-alpine:1.1.0
 
       - name: Build car application
         run: zip -r secrets_1.0.0.car ./secrets_1.0.0/
 
       - name: Build docker image
-        run: docker build -f ./docker/Dockerfile . -t harbor.shared.cnxt3demo.svc.connext.com/default/my-service:3.2.0
+        env:
+          CNXT_DOCKER_ENDPOINT: ${{ secrets.CNXT_DOCKER_ENDPOINT }}
+        run: docker build --build-arg CNXT_DOCKER_ENDPOINT -f ./docker/Dockerfile . -t '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/my-service:3.2.0
       
       - run: echo "🍏 This job's status is ${{ job.status }}."
       

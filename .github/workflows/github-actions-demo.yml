@@ -1,5 +1,5 @@
-name: GitHub Actions Demo
-run-name: Demo Project Workflow Pipeline 🚀
+name: Demo Project Build 🚀
+run-name: Demo Project Build Pipeline 🚀
 on:
   push:
     tags:

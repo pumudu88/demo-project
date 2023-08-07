@@ -32,7 +32,7 @@ jobs:
         run: docker pull '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/wso2-mi-alpine:1.1.0
 
       - name: Build car application
-        run: zip -r secrets_1.0.0.car ./secrets_1.0.0/
+        run: cd ./secrets_1.0.0;zip -r ../secrets_1.0.0.car .;cd ..
 
       - name: Build docker image
         env:

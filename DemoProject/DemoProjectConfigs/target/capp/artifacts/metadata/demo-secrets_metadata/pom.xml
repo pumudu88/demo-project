@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yenlo.connext.metadata</groupId>
+  <artifactId>demo-secrets_metadata</artifactId>
+  <version>1.0.0</version>
+  <packaging>synapse/metadata</packaging>
+  <name>demo-secrets_metadata</name>
+  <description>demo-secrets_metadata</description>
+  <distributionManagement>
+    <repository>
+      <id>release</id>
+      <name>Release Distribution Repository</name>
+      <url>https://example.com/nexus/repository</url>
+    </repository>
+  </distributionManagement>
+  <repositories>
+    <repository>
+      <id>yenlo-releases</id>
+      <name>Yenlo corporate releases repository</name>
+      <url>https://buildserver.yenlo.com/nexus/content/groups/public</url>
+    </repository>
+    <repository>
+      <id>yenlo-snapshots</id>
+      <name>Yenlo corporate snapshots repository</name>
+      <url>https://buildserver.yenlo.com/nexus/content/groups/snapshots</url>
+    </repository>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+        <checksumPolicy>ignore</checksumPolicy>
+      </releases>
+      <id>wso2-nexus</id>
+      <url>https://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+    </repository>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>yenlo-releases</id>
+      <name>Yenlo corporate releases repository</name>
+      <url>https://buildserver.yenlo.com/nexus/content/groups/public</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>yenlo-snapshots</id>
+      <name>Yenlo corporate snapshots repository</name>
+      <url>https://buildserver.yenlo.com/nexus/content/groups/snapshots</url>
+    </pluginRepository>
+    <pluginRepository>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+        <checksumPolicy>ignore</checksumPolicy>
+      </releases>
+      <id>wso2-nexus</id>
+      <url>https://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+    </pluginRepository>
+    <pluginRepository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.wso2.maven</groupId>
+        <artifactId>wso2-esb-metadata-plugin</artifactId>
+        <version>5.2.31</version>
+        <extensions>true</extensions>
+        <configuration>
+          <artifact>demo-secrets_metadata.yaml</artifact>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -37,7 +37,7 @@ jobs:
       - name: Build docker image
         env:
           CNXT_DOCKER_ENDPOINT: ${{ secrets.CNXT_DOCKER_ENDPOINT }}
-        run: docker build --build-arg CNXT_DOCKER_ENDPOINT -f ./docker/Dockerfile . -t '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/demo-project:'${{ env.RELEASE_VERSION }}'
+        run: docker build --build-arg CNXT_DOCKER_ENDPOINT -f ./Docker/Dockerfile . -t '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/demo-project:'${{ env.RELEASE_VERSION }}'
       - name: Push the docker custom image
         run: docker push '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/demo-project:'${{ env.RELEASE_VERSION }}'
       - run: echo "🍏 This job's status is ${{ job.status }}."

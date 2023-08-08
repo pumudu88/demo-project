@@ -1,4 +1,4 @@
- name: Demo Project Build 🚀
+name: Demo Project Build 🚀
 run-name: Demo Project Build Pipeline 🚀
 on:
   push:

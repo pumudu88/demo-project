@@ -25,30 +25,27 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
       - name: Build with Maven
-        run: cd DemoProject;mvn clean install -Dmaven.test.skip=true
+        run: cd DemoProject;mvn clean install -Dmaven.test.skip=true;cd ..
+      - name: Copy car file to docker directory
+        run: cp DemoProject/DemoProjectCompositeExporter/target/DemoProjectCompositeExporter_1.0.0.car Docker/
       
-      
-      
-      # - name: Set env
-      #   run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      # - name: Release version
-      #   run: |
-      #     echo $RELEASE_VERSION
-      #     echo ${{ env.RELEASE_VERSION }}
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Release version
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ env.RELEASE_VERSION }}
           
-      # - name: docker registry login
-      #   run: echo '${{ secrets.CNXT_DOCKER_PASSWORD }}' | docker login 'https://${{ secrets.CNXT_DOCKER_ENDPOINT }}' -u '${{ secrets.CNXT_DOCKER_USERNAME }}' --password-stdin
-      # - name: docker pull connext MI base image
-      #   run: docker pull '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/wso2-mi-alpine:1.1.0
+      - name: docker registry login
+        run: echo '${{ secrets.CNXT_DOCKER_PASSWORD }}' | docker login 'https://${{ secrets.CNXT_DOCKER_ENDPOINT }}' -u '${{ secrets.CNXT_DOCKER_USERNAME }}' --password-stdin
+      - name: docker pull connext MI base image
+        run: docker pull '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/wso2-mi-alpine:1.1.0
 
-      # - name: Build car application
-      #   run: cd ./secrets_1.0.0;zip -r ../secrets_1.0.0.car .;cd ..
-
-      # - name: Build docker image
-      #   env:
-      #     CNXT_DOCKER_ENDPOINT: ${{ secrets.CNXT_DOCKER_ENDPOINT }}
-      #   run: docker build --build-arg CNXT_DOCKER_ENDPOINT -f ./Docker/Dockerfile . -t '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/demo-project:'${{ env.RELEASE_VERSION }}'
-      # - name: Push the docker custom image
-      #   run: docker push '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/demo-project:'${{ env.RELEASE_VERSION }}'
-      # - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Build custom MI image with car application
+        env:
+          CNXT_DOCKER_ENDPOINT: ${{ secrets.CNXT_DOCKER_ENDPOINT }}
+        run: docker build --build-arg CNXT_DOCKER_ENDPOINT -f ./Docker/Dockerfile ./Docker -t '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/demo-project:'${{ env.RELEASE_VERSION }}'
+      - name: Push the docker custom image
+        run: docker push '${{ secrets.CNXT_DOCKER_ENDPOINT }}'/default/demo-project:'${{ env.RELEASE_VERSION }}'
+      - run: echo "🍏 This job's status is ${{ job.status }}."
       
